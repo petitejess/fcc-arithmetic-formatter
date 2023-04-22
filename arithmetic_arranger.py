@@ -1,8 +1,7 @@
-import re
 import operator
 
 
-def isValidProblems(problem_list):
+def is_valid_problems(problem_list):
   # No more than 5 problems
   if (len(problem_list) > 5):
     return {"status": False, "message": "Error: Too many problems."}
@@ -19,18 +18,14 @@ def isValidProblems(problem_list):
       }
 
     # Only contain max 4 digits
-    regexpDigitMax = r'^[\d\w]{0,4}$'
-    if (not (re.match(regexpDigitMax, num1)
-             and re.match(regexpDigitMax, num2))):
+    if (len(str(num1)) > 4 or len(str(num2)) > 4):
       return {
         "status": False,
         "message": "Error: Numbers cannot be more than four digits."
       }
 
     # Numbers only
-    regexpNumberOnly = r'^\d+$'
-    if (not (re.match(regexpNumberOnly, num1)
-             and re.match(regexpNumberOnly, num2))):
+    if (not (num1.isnumeric() and num2.isnumeric())):
       return {
         "status": False,
         "message": "Error: Numbers must only contain digits."
@@ -40,7 +35,7 @@ def isValidProblems(problem_list):
 
 
 def arithmetic_arranger(problems, displayResult=False):
-  if (isValidProblems(problems)["status"]):
+  if (is_valid_problems(problems)["status"]):
     num1_list = []
     num2_list = []
     separator_list = []
@@ -74,7 +69,7 @@ def arithmetic_arranger(problems, displayResult=False):
     return arranged_problems
 
   else:
-    return isValidProblems(problems)["message"]
+    return is_valid_problems(problems)["message"]
 
 
 print(arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"]),
